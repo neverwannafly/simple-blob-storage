@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: roboto;
+  height: calc(100% - 2rem);
+}
+
+a {
+  color: rgb(118, 184, 223);
+  text-decoration: inherit;
+}
+
+p, div, span, input {
+  font-size: 1.1rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.center {
+  margin: 0 auto;
+}

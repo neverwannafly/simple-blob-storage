@@ -1,0 +1,49 @@
+.devise-form {
+  background-image: linear-gradient(to right, #7496e0, #6985e6, #6872e8, #715ae6, #813bde);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &__container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    width: 75%;
+  }
+
+  &__action {
+    background-image: linear-gradient(to right, #7496e0, #6985e6, #6872e8, #715ae6, #813bde);
+    color: white;
+    padding: 0.75rem;
+    width: 100%;
+    margin: 1rem 0;
+    border: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    margin: 0.75rem 0;
+
+    input {
+      margin: 0.25rem 0;
+      width: calc(100% - 1.5rem + 6px);
+      border-radius: 0.2rem;
+      border: 1px solid gray;
+      padding: 0.5rem;
+    }
+  }
+}
