@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  t.text :username, unique: true, index: true
-  t.text :email, unique: true, index: true,
-  t.text :first_name,
-  t.text :last_name,
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 end
