@@ -2,7 +2,7 @@
   <div class="devise-form__container">
     <h2 class="center">Login</h2>
 
-    <%= form_for(resource, class: 'devise-form__form', as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= form_for(resource, class: 'devise-form__form', as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="devise-form__input">

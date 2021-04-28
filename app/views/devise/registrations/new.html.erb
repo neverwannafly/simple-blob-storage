@@ -7,12 +7,12 @@
 
       <div class="devise-form__input">
         <%= f.label :username %><br />
-        <%= f.text_field :username, required: true %>
+        <%= f.text_field :username, autofocus: true, required: true %>
       </div>
 
       <div class="devise-form__input">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true %>
+        <%= f.email_field :email, autocomplete: "email", required: true %>
       </div>
 
       <div class="devise-form__input">
