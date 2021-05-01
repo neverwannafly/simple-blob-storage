@@ -4,14 +4,16 @@
 
 <div class="home container">
   <div class="home__tokens">
+    <h2>My Auth Tokens</h2>
     <% if @auth_tokens.length == 0 %>
       No auth keys found
     <% else %>
-      <% @auth_tokens.each do |auth_token| %>
+      <% @auth_tokens.each_with_index do |auth_token, idx| %>
         <div class="home__token-row">
-          <div> <%= auth_token[:name] %> </div>
-          <div> <%= auth_token[:scope] %> </div>
-          <div> <%= auth_token[:token] %> </div>
+          <div class="home__token-name-<%= idx %>"> <%= auth_token[:name] %> </div>
+          <div class="home__token-scope-<%= idx %>"> <%= auth_token[:scope] %> </div>
+          <div class="home__auth-token-<%= idx %>"> <%= auth_token[:token] %> </div>
+          <div class="home__auth-action" data-target="<%= idx %>"> View Token </div>
         </div>
       <% end %>
     <% end %>
@@ -45,3 +47,5 @@
     <div>
   <% end %>
 <% end %>
+
+<%= javascript_pack_tag 'home/index' %>

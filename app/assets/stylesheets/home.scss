@@ -32,13 +32,17 @@
 
     div {
       &:nth-child(1) {
-        width: 20%;
+        width: 15%;
       }
       &:nth-child(2) {
         width: 20%;
       }
       &:nth-child(3) {
-        width: 60%;
+        width: 50%;
+        overflow-wrap: break-word;
+      }
+      &:nth-child(4) {
+        width: 15%;
       }
     }
   }
@@ -51,5 +55,12 @@
     button {
       margin: 0.25rem 0;
     }
+  }
+
+  &__auth-action {
+    color: blue;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
   }
 }

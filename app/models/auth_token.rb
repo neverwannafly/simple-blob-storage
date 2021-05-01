@@ -24,6 +24,13 @@ class AuthToken < ApplicationRecord
     self.encrypt(token) == auth_token.token
   end
 
+  def self.get_decrypted_token(bearer, scope, name)
+    auth = self.where(bearer: bearer, scope: scope, name: name).first
+    return nil if auth.nil?
+
+    self.decrypt(auth.token)
+  end
+
   def self.is_present?(bearer, scope, name)
     self.active.where(bearer: bearer, scope: scope, name: name).first.present?
   end

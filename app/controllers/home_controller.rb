@@ -9,6 +9,16 @@ class HomeController < ApplicationController
     @scopes = AuthToken.scopes.keys
   end
 
+  def reveal_token
+    name = params[:token_name]
+    scope = params[:token_scope]
+
+    token = AuthToken.get_decrypted_token(current_user, scope, name)
+    head :not_found and return if token.nil?
+  
+    render json: { token: token }
+  end
+
   def generate_token
     random_token = random_string
     scope = params[:auth_token][:scope]
