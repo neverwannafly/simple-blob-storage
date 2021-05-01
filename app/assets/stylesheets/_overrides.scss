@@ -32,3 +32,9 @@ p, div, span, input {
   transform: translate(-10%, 20%);
   z-index: 1;
 }
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}

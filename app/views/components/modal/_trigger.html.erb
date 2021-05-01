@@ -1,0 +1,7 @@
+<% target = locals[:target] %>
+<% classes = locals[:classes] || "btn btn-primary btn-block" %>
+<% title = locals[:title] %>
+
+<button type="button" class="<%= classes %>" data-toggle="modal" data-target="#<%= target %>">
+  <%= title %>
+</button>

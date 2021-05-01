@@ -3,10 +3,53 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 .home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+
   &__logout {
     background-color: inherit;
     border: none;
     color: white;
     padding: 0.5rem 0;
+  }
+
+  &__tokens {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 20rem;
+    overflow: scroll;
+    margin: 2rem 0;
+    padding: 2rem;
+    border: 1px solid gray;
+  }
+
+  &__token-row {
+    display: flex;
+    flex-direction: row;
+
+    div {
+      &:nth-child(1) {
+        width: 20%;
+      }
+      &:nth-child(2) {
+        width: 20%;
+      }
+      &:nth-child(3) {
+        width: 60%;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    button {
+      margin: 0.25rem 0;
+    }
   }
 }

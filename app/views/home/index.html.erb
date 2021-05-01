@@ -1,1 +1,47 @@
+<% modal_id = 'new-auth-key-modal' %>
+
 <%= render "components/navbar", :locals => { page: :home } %>
+
+<div class="home container">
+  <div class="home__tokens">
+    <% if @auth_tokens.length == 0 %>
+      No auth keys found
+    <% else %>
+      <% @auth_tokens.each do |auth_token| %>
+        <div class="home__token-row">
+          <div> <%= auth_token[:name] %> </div>
+          <div> <%= auth_token[:scope] %> </div>
+          <div> <%= auth_token[:token] %> </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="home__actions">
+    <%=
+      render "components/modal/trigger",
+      locals: { target: modal_id, title: "Create Auth Key" }
+    %>
+    <button class="btn btn-outline-danger btn-block"> Start Session </button>
+  </div>
+</div>
+
+<%=
+  render "components/modal/index",
+  locals: { title: "Create new auth key", id: modal_id } do
+%>
+  <%= form_for(@auth_token, class: 'devise-form__form', url: :generate_token) do |f| %>
+    <div class="devise-form__input">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, autofocus: true, required: true %>
+    </div>
+
+    <div class="devise-form__input">
+      <%= f.label :scope %><br />
+      <%= f.select :scope, @scopes, required: true %>
+    </div>
+
+    <div>
+      <%= f.submit "Create Auth Token", class: "btn btn-success btn-block mt-4" %>
+    <div>
+  <% end %>
+<% end %>

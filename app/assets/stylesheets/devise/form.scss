@@ -38,12 +38,13 @@
   &__input {
     margin: 0.75rem 0;
 
-    input {
-      margin: 0.25rem 0;
-      width: calc(100% - 1.5rem + 6px);
+    input, select {
+      margin: 0.125rem 0;
+      width: 100%;
       border-radius: 0.2rem;
       border: 1px solid gray;
       padding: 0.5rem;
+      line-height: 1.2rem;
     }
   }
 }
