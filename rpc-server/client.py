@@ -28,12 +28,12 @@ try_establish_session()
 # Request server from load balancer
 
 balancer_config = config.balancer
-balancer = xmlrpc.client.ServerProxy(f"http://{balancer_config['env']}:{balancer_config['port']}")
+balancer = xmlrpc.client.ServerProxy(f"http://{balancer_config['host']}:{balancer_config['port']}")
 
 available_server_id = balancer.request_server()
 
 kdc_config = config.kdc
-kdc = xmlrpc.client.ServerProxy(f"http://{kdc_config['env']}:{kdc_config['port']}")
+kdc = xmlrpc.client.ServerProxy(f"http://{kdc_config['host']}:{kdc_config['port']}")
 
 def get_command_list(remote):
   return {

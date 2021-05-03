@@ -1,16 +1,23 @@
-servers = [{
-  'id': 1,
-  'secret_key': "MDACBsrfnElnEGzL",
-  'port': 3401,
-  'env': "localhost",
-  'name': "Virginia-West",
-}, {
-  'id': 2,
-  'secret_key': "zQhufNiR9iDXlyQU",
-  'port': 3402,
-  'env': "localhost",
-  'name': "US-East",
-}]
+from MySQLdb import _mysql
+
+db = _mysql.connect(
+  user ='root',
+  passwd = '10p17fs0008',
+  host = 'localhost',
+  db = 'rpc_file_system_development'
+)
+
+db.query("SELECT * from servers")
+
+query_output = db.store_result()
+res = query_output.fetch_row(0, 1)
+for row in res:
+  for key in row:
+    row[key] = row[key].decode('utf-8')
+
+servers = list(filter(lambda server: server['server_type'] == '0', res))
+kdc = list(filter(lambda server: server['server_type'] == '1', res))[0]
+balancer = list(filter(lambda server: server['server_type'] == '2', res))[0]
 
 clients = [{
   'id': 1,
@@ -38,21 +45,6 @@ clients = [{
   'username': 'jett',
   'password': 'password',
 }]
-
-kdc = {
-  'id': 1,
-  'secret_key': 'xLWDSEcrhElRpWjX',
-  'port': 3400,
-  'env': 'localhost',
-}
-
-balancer = {
-  'id': 1,
-  'secret_key': 'weHgSPoiUy6WgSk0',
-  'port': 3100,
-  'env': 'localhost',
-  'name': 'load-balancer'
-}
 
 config = {
   'kdc': kdc,

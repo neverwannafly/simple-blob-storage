@@ -1,8 +1,8 @@
 class KeyDistributionCenter:
   def __init__(self, config):
     self.secret_key = config['kdc']['secret_key']
-    self.port = config['kdc']['port']
-    self.env = config['kdc']['env']
+    self.port = int(config['kdc']['port'])
+    self.env = config['kdc']['host']
     self.client_keys = self.set_keys(config['servers'])
     self.server_keys = self.set_keys(config['clients'])
     self.session_keys = []

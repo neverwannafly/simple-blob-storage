@@ -11,7 +11,7 @@ if len(sys.argv) != 2:
   print("Please provide server id")
   exit()
 
-server_id = int(sys.argv[1])
+server_id = sys.argv[1]
 server_configs = list(filter(lambda server: server['id'] == server_id, config.servers))
 
 def get_client(client_id):

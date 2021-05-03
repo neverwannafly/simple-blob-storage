@@ -20,7 +20,7 @@ with SimpleXMLRPCServer((BALANCER.env, BALANCER.port), requestHandler=RequestHan
 
   def request_server():
     selected_server = choice(servers)
-    print(f"{bcolors.OKCYAN}Redirected to [{selected_server['name']}@{selected_server['env']}:{selected_server['port']}]{bcolors.CEND}")
+    print(f"{bcolors.OKCYAN}Redirected to [{selected_server['name']}@{selected_server['host']}:{selected_server['port']}]{bcolors.CEND}")
     return selected_server['id']
 
   # Registrations
