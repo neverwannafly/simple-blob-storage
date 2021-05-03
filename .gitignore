@@ -42,3 +42,4 @@ yarn-debug.log*
 
 .vscode
 config/secrets.yml
+env
