@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_01_134514) do
+ActiveRecord::Schema.define(version: 2021_05_03_134723) do
 
   create_table "auth_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "token"
@@ -24,6 +24,25 @@ ActiveRecord::Schema.define(version: 2021_05_01_134514) do
     t.index ["bearer_type", "bearer_id"], name: "index_auth_tokens_on_bearer_type_and_bearer_id"
   end
 
+  create_table "file_nodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "file_name"
+    t.string "file_size"
+    t.string "file_type"
+    t.integer "permissions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "file_systems", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "node_type"
+    t.integer "permissions"
+    t.integer "parent_id", default: 0
+    t.bigint "owner_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id"], name: "index_file_systems_on_owner_id"
+  end
+
   create_table "servers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "host"
@@ -35,6 +54,18 @@ ActiveRecord::Schema.define(version: 2021_05_01_134514) do
     t.string "secret_key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "users_id"
+    t.bigint "servers_id"
+    t.bigint "auth_tokens_id"
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["auth_tokens_id"], name: "index_user_sessions_on_auth_tokens_id"
+    t.index ["servers_id"], name: "index_user_sessions_on_servers_id"
+    t.index ["users_id"], name: "index_user_sessions_on_users_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -53,4 +84,7 @@ ActiveRecord::Schema.define(version: 2021_05_01_134514) do
     t.index ["username"], name: "index_users_on_username"
   end
 
+  add_foreign_key "user_sessions", "auth_tokens", column: "auth_tokens_id"
+  add_foreign_key "user_sessions", "servers", column: "servers_id"
+  add_foreign_key "user_sessions", "users", column: "users_id"
 end

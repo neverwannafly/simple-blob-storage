@@ -2,7 +2,7 @@ class AuthToken < ApplicationRecord
   extend MessageEncryptor
   belongs_to :bearer, polymorphic: true
 
-  enum status: [:active, :inactive]
+  enum status: [:active, :inactive, :deleted]
   enum scope: [:read_only, :write_only, :read_and_write]
 
   def self.get_tokens_for_bearer(bearer)
