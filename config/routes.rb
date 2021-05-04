@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   get '/', to: 'home#index', as: :home_controller
   post '/reveal-token', to: 'home#reveal_token'
   post '/generate-token', to: 'home#generate_token'
+
+  get '/session', to: 'rpc_session#index', as: :session_controller
 end

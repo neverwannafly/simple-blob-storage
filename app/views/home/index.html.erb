@@ -23,7 +23,12 @@
       render "components/modal/trigger",
       locals: { target: modal_id, title: "Create Auth Key" }
     %>
-    <button class="btn btn-outline-danger btn-block"> Start Session </button>
+    <a
+      href="<%= session_controller_path %>"
+      class="btn btn-outline-danger btn-block"
+    >
+      Start Session
+    </a>
   </div>
 </div>
 
