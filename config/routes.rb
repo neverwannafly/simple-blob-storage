@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   post '/generate-token', to: 'home#generate_token'
 
   get '/session', to: 'rpc_session#index', as: :session_controller
+  get '/session-data', to: 'rpc_session#session_data'
 end

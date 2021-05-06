@@ -57,15 +57,15 @@ ActiveRecord::Schema.define(version: 2021_05_03_134723) do
   end
 
   create_table "user_sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "servers_id"
-    t.bigint "auth_tokens_id"
+    t.bigint "user_id"
+    t.bigint "server_id"
+    t.bigint "auth_token_id"
     t.integer "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["auth_tokens_id"], name: "index_user_sessions_on_auth_tokens_id"
-    t.index ["servers_id"], name: "index_user_sessions_on_servers_id"
-    t.index ["users_id"], name: "index_user_sessions_on_users_id"
+    t.index ["auth_token_id"], name: "index_user_sessions_on_auth_token_id"
+    t.index ["server_id"], name: "index_user_sessions_on_server_id"
+    t.index ["user_id"], name: "index_user_sessions_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2021_05_03_134723) do
     t.index ["username"], name: "index_users_on_username"
   end
 
-  add_foreign_key "user_sessions", "auth_tokens", column: "auth_tokens_id"
-  add_foreign_key "user_sessions", "servers", column: "servers_id"
-  add_foreign_key "user_sessions", "users", column: "users_id"
+  add_foreign_key "user_sessions", "auth_tokens"
+  add_foreign_key "user_sessions", "servers"
+  add_foreign_key "user_sessions", "users"
 end
