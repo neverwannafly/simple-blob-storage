@@ -10,4 +10,8 @@ Rails.application.routes.draw do
 
   get '/session', to: 'rpc_session#index', as: :session_controller
   get '/session-data', to: 'rpc_session#session_data'
+
+  # RPC commands
+  post '/session/ping', to: 'rpc_session#ping'
+  post '/session/ls', to: 'rpc_session#ls'
 end

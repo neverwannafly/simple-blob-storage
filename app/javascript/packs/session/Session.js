@@ -3,6 +3,7 @@ import { ReactTerminal } from "react-terminal";
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 
 import { loadSession } from './store/session';
+import commands from './commands';
 
 import AsyncContent from './components/AsyncContent';
 
@@ -26,6 +27,7 @@ function Session() {
         error={error}
       >
         <ReactTerminal
+          commands={commands}
           showControlButtons={false}
         />
       </AsyncContent>

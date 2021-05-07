@@ -3,9 +3,9 @@ class UserSession < ApplicationRecord
 
   belongs_to :user
   belongs_to :server
-  belongs_to :auth_key
+  belongs_to :auth_token
 
-  enum state: [:ongoing, :ended ]
+  enum state: [:ongoing, :ended]
 
   def self.allocate_session(user:, auth_token: nil)
     if auth_token.nil?
@@ -21,5 +21,18 @@ class UserSession < ApplicationRecord
     end
 
     return session
+  end
+
+  def self.execute_remote_command(session, command, params = nil)
+    url = "#{session.server.url}/RPC2"
+    user_id = session.user.id
+
+    if command == :ping
+      rpc(url, command)
+    elsif command == :ls
+      rpc(url, command, [
+        [[["client_id", user_id, "int"]], "struct"]
+      ])
+    end
   end
 end

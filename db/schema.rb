@@ -84,7 +84,4 @@ ActiveRecord::Schema.define(version: 2021_05_03_134723) do
     t.index ["username"], name: "index_users_on_username"
   end
 
-  add_foreign_key "user_sessions", "auth_tokens"
-  add_foreign_key "user_sessions", "servers"
-  add_foreign_key "user_sessions", "users"
 end

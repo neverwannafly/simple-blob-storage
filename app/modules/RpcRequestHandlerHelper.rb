@@ -21,18 +21,24 @@ module RpcRequestHandlerHelper
       method_name: 'create_session',
       params: [[params[:user_id], "int"], [server_id]]
     )
-    
-    session = UserSession.create(
+
+    session = UserSession.create!(
       user_id: params[:user_id],
       auth_token_id: params[:auth_token_id],
       server_id: server_id,
-      state: :ongoing,
+      state: :ongoing
     )
 
     return session
   end
 
-  private
+  def rpc(url, method, params = [])
+    response = api_request(
+      url: url,
+      method_name: method,
+      params: params
+    )
 
-  
+    Nokogiri::XML(response).at_xpath('methodResponse').content.strip
+  end
 end

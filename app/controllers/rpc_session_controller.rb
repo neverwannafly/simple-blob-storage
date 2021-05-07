@@ -5,12 +5,22 @@ class RpcSessionController < ApplicationController
   end
 
   def session_data
-    head :not_found and return if @session.nil?
-
     render json: {
       session: @session,
-      user: @session.user,
-      server: @session.server,
+      user: current_user,
+      server: @server,
+    }
+  end
+
+  def ping
+    render json: {
+      output: UserSession.execute_remote_command(@session, :ping)
+    }
+  end
+
+  def ls
+    render json: {
+      output: UserSession.execute_remote_command(@session, :ls)
     }
   end
 
@@ -18,5 +28,6 @@ class RpcSessionController < ApplicationController
 
   def set_session_data
     @session = UserSession.allocate_session(user: current_user)
+    @server = @session.server
   end
 end

@@ -33,6 +33,7 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
     return f"{SERVER}"
 
   def ls(args):
+    print(args)
     client = get_client(args['client_id'])
     current_path = SERVER.client_path(client['username'])
     res = subprocess.run(['ls', current_path], stdout=subprocess.PIPE)
