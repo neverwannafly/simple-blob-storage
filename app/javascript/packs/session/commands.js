@@ -3,8 +3,8 @@ import { apiRequest } from '../utils';
 function createActionCommands(commandList) {
   const commands = {};
   commandList.forEach((command) => {
-    commands[command] = async () => {
-      const { output } = await apiRequest('POST', `/session/${command}`);
+    commands[command] = async (options = '') => {
+      const { output } = await apiRequest('POST', `/session/rpc`, { options, command });
       return output;
     };
   });
@@ -12,7 +12,7 @@ function createActionCommands(commandList) {
 }
 
 const commandList = [
-  'ping', 'ls',
+  'ping', 'ls', 'pwd', 'touch', 'cp', 'cat',
 ]
 
 export default createActionCommands(commandList);

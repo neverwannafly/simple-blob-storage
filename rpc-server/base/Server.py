@@ -36,7 +36,9 @@ class FileServer(BaseServer):
     self.connections.discard(client_username)
     print(f"\033[91m>> Client::{client_username} disconnected\033[0m")
 
-  def client_path(self, client_username):
+  def client_path(self, client_username, relative=False):
+    if relative:
+      return "simple-storage/" + client_username
     path = os.path.join(os.path.abspath(os.getcwd()), "rpc-server", "db", client_username)
     return path
 

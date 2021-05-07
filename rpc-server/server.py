@@ -41,7 +41,7 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
 
   def pwd(args):
     client = get_client(args['client_id'])
-    current_path = SERVER.client_path(client['username'])
+    current_path = SERVER.client_path(client['username'], relative=True)
     return current_path
 
   def touch(args):
@@ -49,10 +49,10 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
     current_path = SERVER.client_path(client['username'])
     file_name = args['c1']
     content = args['c2']
-    if file_name is False:
+    if file_name is False or file_name is "":
       return "Please enter filename"
     subprocess.run(['touch', f'{current_path}/{file_name}'], stdout=subprocess.PIPE)
-    if content is not False:
+    if content is not False or content is "":
       f = open(f'{current_path}/{file_name}', "w")
       f.write(content)
       f.close()
@@ -62,7 +62,7 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
     client = get_client(args['client_id'])
     current_path = SERVER.client_path(client['username'])
     file_name = args['c1']
-    if file_name is False:
+    if file_name is False or file_name is '':
       return "Please enter filename"
     res = subprocess.run(['cat', f'{current_path}/{file_name}'], stdout=subprocess.PIPE)
     return res.stdout.decode('utf-8')
@@ -72,7 +72,7 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
     current_path = SERVER.client_path(client['username'])
     file1_name = args['c1']
     file2_name = args['c2']
-    if file1_name is False or file2_name is False:
+    if file1_name is False or file2_name == '' or file1_name == '' or file2_name is False:
       return "Please enter both filenames"
     res = res = subprocess.run([
       'cp',

@@ -27,11 +27,39 @@ class UserSession < ApplicationRecord
     url = "#{session.server.url}/RPC2"
     user_id = session.user.id
 
-    if command == :ping
+    case command
+    when 'ping'
       rpc(url, command)
-    elsif command == :ls
+    when 'ls'
       rpc(url, command, [
         [[["client_id", user_id, "int"]], "struct"]
+      ])
+    when 'pwd'
+      rpc(url, command, [
+        [[["client_id", user_id, "int"]], "struct"]
+      ])
+    when 'touch'
+      rpc(url, command, [
+        [[
+          ["client_id", user_id, "int"],
+          ["c1", params[0] || '', "string"],
+          ["c2", params[1] || '']
+        ], "struct"]
+      ])
+    when 'cp'
+      rpc(url, command, [
+        [[
+          ["client_id", user_id, "int"],
+          ["c1", params[0] || '', "string"],
+          ["c2", params[1] || '']
+        ], "struct"]
+      ])
+    when 'cat'
+      rpc(url, command, [
+        [[
+          ["client_id", user_id, "int"],
+          ["c1", params[0] || '', "string"],
+        ], "struct"]
       ])
     end
   end

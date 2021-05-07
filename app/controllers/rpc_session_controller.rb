@@ -12,15 +12,12 @@ class RpcSessionController < ApplicationController
     }
   end
 
-  def ping
-    render json: {
-      output: UserSession.execute_remote_command(@session, :ping)
-    }
-  end
+  def rpc
+    options = params[:options].split(' ')
+    command = params[:command]
 
-  def ls
     render json: {
-      output: UserSession.execute_remote_command(@session, :ls)
+      output: UserSession.execute_remote_command(@session, command, options)
     }
   end
 

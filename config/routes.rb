@@ -12,6 +12,5 @@ Rails.application.routes.draw do
   get '/session-data', to: 'rpc_session#session_data'
 
   # RPC commands
-  post '/session/ping', to: 'rpc_session#ping'
-  post '/session/ls', to: 'rpc_session#ls'
+  post '/session/rpc', to: 'rpc_session#rpc'
 end
