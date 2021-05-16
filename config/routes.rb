@@ -11,6 +11,12 @@ Rails.application.routes.draw do
   get '/session', to: 'rpc_session#index', as: :session_controller
   get '/session-data', to: 'rpc_session#session_data'
 
+  # File Sharing
+  get '/files/:id', to: 'file#index'
+
   # RPC commands
+  post '/session/upload-file', to: 'rpc_session#upload_file'
+  post '/session/cd', to: 'rpc_session#cd'
+  post '/session/link', to: 'rpc_session#link'
   post '/session/rpc', to: 'rpc_session#rpc'
 end

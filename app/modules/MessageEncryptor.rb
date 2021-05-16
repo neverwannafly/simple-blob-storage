@@ -26,7 +26,7 @@ module MessageEncryptor
   private
 
   def seperator_pattern
-    "(~&*$#%@)"
+    "|~$|"
   end
 
   def password

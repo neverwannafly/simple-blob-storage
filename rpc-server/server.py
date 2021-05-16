@@ -2,6 +2,7 @@ import sys
 import subprocess
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.server import SimpleXMLRPCRequestHandler
+import base64
 
 import config
 from colors import bcolors
@@ -33,20 +34,20 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
     return f"{SERVER}"
 
   def ls(args):
-    print(args)
     client = get_client(args['client_id'])
-    current_path = SERVER.client_path(client['username'])
+    current_path = SERVER.client_path(args['base_prefix'])
+    print(current_path)
     res = subprocess.run(['ls', current_path], stdout=subprocess.PIPE)
     return res.stdout.decode('utf-8')
 
   def pwd(args):
     client = get_client(args['client_id'])
-    current_path = SERVER.client_path(client['username'], relative=True)
+    current_path = SERVER.client_path(args['base_prefix'], relative=True)
     return current_path
 
   def touch(args):
     client = get_client(args['client_id'])
-    current_path = SERVER.client_path(client['username'])
+    current_path = SERVER.client_path(args['base_prefix'])
     file_name = args['c1']
     content = args['c2']
     if file_name is False or file_name is "":
@@ -60,7 +61,7 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
 
   def cat(args):
     client = get_client(args['client_id'])
-    current_path = SERVER.client_path(client['username'])
+    current_path = SERVER.client_path(args['base_prefix'])
     file_name = args['c1']
     if file_name is False or file_name is '':
       return "Please enter filename"
@@ -69,7 +70,7 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
 
   def cp(args):
     client = get_client(args['client_id'])
-    current_path = SERVER.client_path(client['username'])
+    current_path = SERVER.client_path(args['base_prefix'])
     file1_name = args['c1']
     file2_name = args['c2']
     if file1_name is False or file2_name == '' or file1_name == '' or file2_name is False:
@@ -80,6 +81,27 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
       f'{current_path}/{file2_name}'
     ], stdout=subprocess.PIPE)
     return "Copied contents!"
+
+  def mkdir(args):
+    client = get_client(args['client_id'])
+
+    current_path = SERVER.client_path(args['base_prefix'])
+    dir_name = args['c1']
+    if dir_name is False or dir_name is "":
+      return "Please enter directory name"
+    subprocess.run(['mkdir', f'{current_path}/{dir_name}'], stdout=subprocess.PIPE)
+    return f"Directory created"
+
+  def upload(args):
+    client = get_client(args['client_id'])
+    name = args['name']
+    type = args['type']
+    path = SERVER.client_path(args['base_prefix']) + "/" + name + "." + type.split('/')[-1]
+  
+    file = args['file']
+    file_content = base64.b64decode(file)
+    with open(path,"wb") as f:
+      f.write(file_content)
 
   def add_connection(client_username):
     SERVER.add_connection(client_username)
@@ -100,6 +122,8 @@ with SimpleXMLRPCServer((ENV, PORT), requestHandler=RequestHandler) as server:
   server.register_function(pwd, 'pwd')
   server.register_function(cat, 'cat')
   server.register_function(cp, 'cp')
+  server.register_function(upload, 'upload')
+  server.register_function(mkdir, 'mkdir')
 
   print(f"{bcolors.OKGREEN}Started server {SERVER}{bcolors.CEND}")
   server.serve_forever()

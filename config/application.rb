@@ -28,5 +28,7 @@ module RpcFileSystem
         ENV[key.to_s] = value
       end if File.exists?(env_file)
     end
+
+    config.filter_parameters += [:file]
   end
 end

@@ -22,12 +22,35 @@ module RpcRequestHandlerHelper
       params: [[params[:user_id], "int"], [server_id]]
     )
 
-    session = UserSession.create!(
-      user_id: params[:user_id],
-      auth_token_id: params[:auth_token_id],
-      server_id: server_id,
-      state: :ongoing
-    )
+    session = nil
+
+    ActiveRecord::Base.transaction do
+      session = UserSession.create!(
+        user_id: params[:user_id],
+        auth_token_id: params[:auth_token_id],
+        server_id: server_id,
+        state: :ongoing
+      )
+      fs = FileSystem.create_directory(
+        parent_id: -1,
+        owner_id: params[:user_id],
+        directory_name: params[:username],
+      )
+  
+      SessionDatum.create!(
+        user_session_id: session.id,
+        active_node: fs.id,
+        history: ''
+      )
+      
+      rpc("#{session.server.url}/RPC2", 'mkdir', [
+        [[
+          ["client_id", params[:user_id], "int"],
+          ["c1", User.find(params[:user_id]).username, "string"],
+          ["base_prefix", '']
+        ], "struct"]
+      ])
+    end
 
     return session
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_03_134723) do
+ActiveRecord::Schema.define(version: 2021_05_13_053940) do
 
   create_table "auth_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "token"
@@ -25,12 +25,12 @@ ActiveRecord::Schema.define(version: 2021_05_03_134723) do
   end
 
   create_table "file_nodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "file_name"
     t.string "file_size"
     t.string "file_type"
     t.integer "permissions"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "file_system_id"
   end
 
   create_table "file_systems", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2021_05_03_134723) do
     t.bigint "owner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "node_name"
     t.index ["owner_id"], name: "index_file_systems_on_owner_id"
   end
 
@@ -54,6 +55,14 @@ ActiveRecord::Schema.define(version: 2021_05_03_134723) do
     t.string "secret_key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "session_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "active_node"
+    t.text "history"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_session_id"
   end
 
   create_table "user_sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
